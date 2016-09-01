@@ -180,6 +180,7 @@ var gfyObject = function (gfyElem, gfyIndex) {
     function createPlayButton() {
         playButton = document.createElement('div');
         playButton.style.color = "#fff";
+        playButton.style.fontFamily = "sans-serif";
         playButton.style.fontSize = "40px";
         playButton.style.lineHeight = "60px";
         if(optCtrls) {
