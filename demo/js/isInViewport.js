@@ -36,16 +36,16 @@
          if ( test( this.element ) ) {
             if ( !this.invp ) {
                this.invp = true;
-               if ( this.options.scrolledin ) 
+               if ( this.options.scrolledin )
                    this.options.scrolledin.call( this.element, e );
-                
+
                this.element.trigger( 'scrolledin', e );
             }
          } else if ( this.invp ) {
             this.invp = false;
-            if ( this.options.scrolledout ) 
+            if ( this.options.scrolledout )
                 this.options.scrolledout.call( this.element, e );
-             
+
             this.element.trigger( 'scrolledout', e );
          }
       });
