@@ -4,6 +4,9 @@
   "author": "joey5755",
   "description": "Embed script for gfycat videos",
   "main": "src/gfycat.js",
+  "scripts": {
+    "build": "grunt"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gfycat/gfycat.js"
@@ -20,6 +23,7 @@
   ],
   "license": "MIT LICENSE",
   "devDependencies": {
+    "grunt": "^1.0.1",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "^0.11.1",
