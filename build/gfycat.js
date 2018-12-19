@@ -373,9 +373,9 @@ var gfyObject = function (gfyElem, gfyIndex) {
         gfyRootElem.parentNode.replaceChild(newElem, gfyRootElem);
         gfyRootElem = newElem;
         // call gfycat API to get info for this gfycat
-        loadJSONP("https://gfycat.com/cajax/get/" + gfyId, function (data) {
-            if (data) {
-                gfyItem = data.gfyItem;
+        loadJSON("https://api.gfycat.com/v1/gfycats/" + gfyId, function (dataGfyData) {
+            if (dataGfyData) {
+                gfyItem = JSON.parse(dataGfyData).gfyItem;
                 gfyMp4Url = gfyItem.mp4Url;
                 gfyWebmUrl = gfyItem.webmUrl;
                 gfyFrameRate = gfyItem.frameRate;
@@ -416,30 +416,17 @@ var gfyObject = function (gfyElem, gfyIndex) {
 
     // used to load ajax info for each gfycat on the page
     // callback functions must be setup and uniquely named for each
-    function loadJSONP(url, callback, context) {
-        var unique = Math.floor((Math.random()*10000000) + 1);
-        // INIT
-        var name = "_" + gfyId + "_" + unique++;
-        if (url.match(/\?/)) url += "&callback=" + name;
-        else url += "?callback=" + name;
-
-        // Create script
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = url;
-
-        // Setup handler
-        window[name] = function (data) {
-            callback.call((context || window), data);
-            document.getElementsByTagName('head')[0].removeChild(script);
-            script = null;
-            try {
-                delete window[name];
-            } catch (e) {}
+    function loadJSON(url, callback, context) {
+        var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        xobj.open('GET', url, true); // Replace 'my_data' with the path to your file
+        xobj.onreadystatechange = function () {
+            if (xobj.readyState == 4 && xobj.status == "200") {
+                // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                callback(xobj.responseText);
+            }
         };
-
-        // Load JSON
-        document.getElementsByTagName('head')[0].appendChild(script);
+        xobj.send(null);  
     }
 
     function setSize() {
